@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('riscos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plano_estrategico_id')->constrained('planos_estrategicos')->onDelete('cascade');
+            $table->foreignId('planos_estrategico_id')->constrained('planos_estrategicos')->onDelete('cascade');
             $table->text('descricao');
             $table->text('plano_contingencia')->nullable();
             $table->timestamps();

@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('cronogramas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plano_estrategico_id')->constrained('planos_estrategicos')->onDelete('cascade');
+            $table->foreignId('planos_estrategico_id')->constrained('planos_estrategicos')->onDelete('cascade');
             $table->integer('mes');
             $table->text('descricao');
             $table->timestamps();

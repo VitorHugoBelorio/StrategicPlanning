@@ -8,6 +8,7 @@ class PlanoEstrategico extends Model
 {
     use HasFactory;
 
+    protected $table = 'planos_estrategicos'; 
     protected $fillable = [
         'user_id',
         'area_interesse',

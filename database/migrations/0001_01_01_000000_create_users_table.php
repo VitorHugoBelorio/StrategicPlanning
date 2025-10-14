@@ -42,8 +42,15 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Desabilita temporariamente a checagem de chaves estrangeiras
+        Schema::disableForeignKeyConstraints();
+
+        // Apaga todas as tabelas criadas no método up()
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+
+        // Reabilita a checagem
+        Schema::enableForeignKeyConstraints();
     }
 };
