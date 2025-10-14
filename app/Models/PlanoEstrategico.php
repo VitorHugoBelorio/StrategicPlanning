@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,11 +10,13 @@ class PlanoEstrategico extends Model
     use HasFactory;
 
     protected $table = 'planos_estrategicos'; 
+
     protected $fillable = [
         'user_id',
-        'area_interesse',
-        'objetivo_geral',
-        'prazo_meses',
+        'titulo',
+        'visao',
+        'missao',
+        'valores',
     ];
 
     public function user()
@@ -21,6 +24,7 @@ class PlanoEstrategico extends Model
         return $this->belongsTo(User::class);
     }
 
+    // Mantém os relacionamentos futuros prontos
     public function diagnostico()
     {
         return $this->hasOne(DiagnosticoEstrategico::class);

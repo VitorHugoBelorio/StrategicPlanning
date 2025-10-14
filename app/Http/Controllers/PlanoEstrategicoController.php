@@ -31,16 +31,18 @@ class PlanoEstrategicoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'area_interesse' => 'required|string|max:255',
-            'objetivo_geral' => 'required|string',
-            'prazo_meses' => 'required|integer|min:1',
+            'titulo' => 'required|string|max:255',
+            'visao' => 'required|string',
+            'missao' => 'required|string',
+            'valores' => 'required|string',
         ]);
 
         PlanoEstrategico::create([
             'user_id' => Auth::id(),
-            'area_interesse' => $request->area_interesse,
-            'objetivo_geral' => $request->objetivo_geral,
-            'prazo_meses' => $request->prazo_meses,
+            'titulo' => $request->titulo,
+            'visao' => $request->visao,
+            'missao' => $request->missao,
+            'valores' => $request->valores,
         ]);
 
         return redirect()->route('planos.index')->with('success', 'Plano estratégico criado com sucesso!');
@@ -72,12 +74,13 @@ class PlanoEstrategicoController extends Controller
         $this->authorizeOwner($plano);
 
         $request->validate([
-            'area_interesse' => 'required|string|max:255',
-            'objetivo_geral' => 'required|string',
-            'prazo_meses' => 'required|integer|min:1',
+            'titulo' => 'required|string|max:255',
+            'visao' => 'required|string',
+            'missao' => 'required|string',
+            'valores' => 'required|string',
         ]);
 
-        $plano->update($request->only(['area_interesse', 'objetivo_geral', 'prazo_meses']));
+        $plano->update($request->only(['titulo', 'visao', 'missao', 'valores']));
 
         return redirect()->route('planos.index')->with('success', 'Plano atualizado com sucesso!');
     }
