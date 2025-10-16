@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PlanoEstrategicoController;
-
+use App\Http\Controllers\DiagnosticoEstrategicoController;
 /*
 |--------------------------------------------------------------------------
 | Rotas Públicas
@@ -33,4 +33,14 @@ Route::middleware(['auth'])->group(function () {
 
     // CRUD dos planos estratégicos
     Route::resource('planos', PlanoEstrategicoController::class);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/planos/{planoId}/diagnostico/create', [DiagnosticoEstrategicoController::class, 'create'])->name('diagnosticos.create');
+    Route::post('/planos/{planoId}/diagnostico', [DiagnosticoEstrategicoController::class, 'store'])->name('diagnosticos.store');
+    Route::get('/diagnostico/{id}/edit', [DiagnosticoEstrategicoController::class, 'edit'])->name('diagnosticos.edit');
+    Route::put('/diagnostico/{id}', [DiagnosticoEstrategicoController::class, 'update'])->name('diagnosticos.update');
+    Route::get('/diagnostico/{id}', [DiagnosticoEstrategicoController::class, 'show'])->name('diagnosticos.show');
+    Route::delete('/diagnostico/{id}', [DiagnosticoEstrategicoController::class, 'destroy'])->name('diagnosticos.destroy');
+
 });

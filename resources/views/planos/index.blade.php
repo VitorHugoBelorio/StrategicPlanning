@@ -12,7 +12,10 @@
     </div>
 
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
     @endif
 
     @if($planos->isEmpty())
@@ -41,16 +44,26 @@
                                 <td>{{ Str::limit($plano->missao, 40) }}</td>
                                 <td>{{ Str::limit($plano->valores, 40) }}</td>
                                 <td class="text-end">
-                                    <a href="{{ route('planos.show', $plano->id) }}" class="btn btn-outline-primary btn-sm">
+                                    {{-- Ver Detalhes do Plano --}}
+                                    <a href="{{ route('planos.show', $plano->id) }}" 
+                                       class="btn btn-outline-primary btn-sm" title="Ver Detalhes">
                                         <i class="bi bi-eye"></i>
                                     </a>
-                                    <a href="{{ route('planos.edit', $plano->id) }}" class="btn btn-outline-warning btn-sm">
+
+                                    {{-- Editar Plano --}}
+                                    <a href="{{ route('planos.edit', $plano->id) }}" 
+                                       class="btn btn-outline-warning btn-sm" title="Editar">
                                         <i class="bi bi-pencil"></i>
                                     </a>
+
+                                    {{-- Excluir Plano --}}
                                     <form action="{{ route('planos.destroy', $plano->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este plano?')">
+                                        <button type="submit" 
+                                                class="btn btn-outline-danger btn-sm" 
+                                                onclick="return confirm('Tem certeza que deseja excluir este plano?')" 
+                                                title="Excluir">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>

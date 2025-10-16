@@ -9,21 +9,14 @@ class DiagnosticoEstrategico extends Model
 {
     use HasFactory;
 
+    protected $table = 'diagnosticos_estrategicos';
+
     protected $fillable = [
         'plano_estrategico_id',
-        'missao',
-        'visao',
-        'forcas',
-        'fraquezas',
+        'pontos_fortes',
+        'pontos_fracos',
         'oportunidades',
         'ameacas',
-    ];
-
-    protected $casts = [
-        'forcas' => 'array',
-        'fraquezas' => 'array',
-        'oportunidades' => 'array',
-        'ameacas' => 'array',
     ];
 
     public function plano()
