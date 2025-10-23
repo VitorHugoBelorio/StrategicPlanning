@@ -51,9 +51,12 @@ class PlanoEstrategicoController extends Controller
     /**
      * Exibe os detalhes de um plano.
      */
-    public function show(PlanoEstrategico $plano)
+    public function show($id)
     {
-        $this->authorizeOwner($plano);
+        $plano = PlanoEstrategico::with(['diagnostico', 'objetivos'])
+                    ->where('user_id', Auth::id())
+                    ->findOrFail($id);
+
         return view('planos.show', compact('plano'));
     }
 

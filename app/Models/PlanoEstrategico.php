@@ -32,7 +32,7 @@ class PlanoEstrategico extends Model
 
     public function objetivos()
     {
-        return $this->hasMany(ObjetivoEstrategico::class);
+        return $this->hasMany(ObjetivoEstrategico::class, 'plano_estrategico_id');
     }
 
     public function pilares()

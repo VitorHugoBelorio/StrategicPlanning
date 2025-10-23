@@ -32,7 +32,7 @@ class DiagnosticoEstrategicoController extends Controller
             'ameacas' => $request->ameacas,
         ]);
 
-        return redirect()->route('planos.index')->with('success', 'Diagnóstico criado com sucesso!');
+        return redirect()->route('planos.show', $planoId)->with('success', 'Diagnóstico estratégico criado com sucesso!');
     }
 
     public function edit($id)
@@ -47,7 +47,7 @@ class DiagnosticoEstrategicoController extends Controller
 
         $diagnostico->update($request->only(['pontos_fortes', 'pontos_fracos', 'oportunidades', 'ameacas']));
 
-        return redirect()->route('planos.index')->with('success', 'Diagnóstico atualizado com sucesso!');
+        return redirect()->route('planos.show', $planoId)->with('success', 'Diagnóstico estratégico atualizado com sucesso!');
     }
 
     public function show($id)

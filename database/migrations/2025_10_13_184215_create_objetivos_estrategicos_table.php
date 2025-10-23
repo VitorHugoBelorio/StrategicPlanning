@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('objetivos_estrategicos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('planos_estrategico_id')->constrained('planos_estrategicos')->onDelete('cascade');
+            $table->foreignId('plano_estrategico_id')->constrained('planos_estrategicos')->onDelete('cascade');
             $table->text('descricao');
             $table->text('especifico')->nullable();
             $table->text('mensuravel')->nullable();

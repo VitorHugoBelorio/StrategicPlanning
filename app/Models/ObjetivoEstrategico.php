@@ -9,9 +9,14 @@ class ObjetivoEstrategico extends Model
 {
     use HasFactory;
 
+    protected $table = 'objetivos_estrategicos';
+    
     protected $fillable = [
         'plano_estrategico_id',
+        'titulo',
         'descricao',
+        'prazo',
+        'indicador_sucesso',
         'especifico',
         'mensuravel',
         'atingivel',
