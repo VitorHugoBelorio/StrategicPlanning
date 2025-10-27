@@ -25,21 +25,26 @@ class ObjetivoEstrategicoController extends Controller
     public function store(Request $request, $planoId)
     {
         $request->validate([
-            'titulo' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
-            'prazo' => 'nullable|string|max:100',
-            'indicador_sucesso' => 'nullable|string|max:255',
+            'descricao' => 'required|string|max:1000',
+            'especifico' => 'nullable|string|max:1000',
+            'mensuravel' => 'nullable|string|max:1000',
+            'atingivel' => 'nullable|string|max:1000',
+            'relevante' => 'nullable|string|max:1000',
+            'tempo_definido' => 'nullable|string|max:255',
         ]);
 
         ObjetivoEstrategico::create([
             'plano_estrategico_id' => $planoId,
-            'titulo' => $request->titulo,
             'descricao' => $request->descricao,
-            'prazo' => $request->prazo,
-            'indicador_sucesso' => $request->indicador_sucesso,
+            'especifico' => $request->especifico,
+            'mensuravel' => $request->mensuravel,
+            'atingivel' => $request->atingivel,
+            'relevante' => $request->relevante,
+            'tempo_definido' => $request->tempo_definido,
         ]);
 
-        return redirect()->route('planos.show', $planoId)->with('success', 'Objetivo estratégico criado com sucesso!');
+        return redirect()->route('planos.show', $planoId)
+            ->with('success', 'Objetivo estratégico criado com sucesso!');
     }
 
     public function edit($id)
@@ -53,16 +58,22 @@ class ObjetivoEstrategicoController extends Controller
         $objetivo = ObjetivoEstrategico::findOrFail($id);
 
         $request->validate([
-            'titulo' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
-            'prazo' => 'nullable|string|max:100',
-            'indicador_sucesso' => 'nullable|string|max:255',
+            'descricao' => 'required|string|max:1000',
+            'especifico' => 'nullable|string|max:1000',
+            'mensuravel' => 'nullable|string|max:1000',
+            'atingivel' => 'nullable|string|max:1000',
+            'relevante' => 'nullable|string|max:1000',
+            'tempo_definido' => 'nullable|string|max:255',
         ]);
 
-        $objetivo->update($request->only(['titulo', 'descricao', 'prazo', 'indicador_sucesso']));
+        $objetivo->update($request->only([
+            'descricao', 'especifico', 'mensuravel', 'atingivel', 'relevante', 'tempo_definido'
+        ]));
 
         $planoId = $objetivo->plano_estrategico_id;
-        return redirect()->route('planos.show', $planoId)->with('success', 'Objetivo estratégico atualizado com sucesso!');
+
+        return redirect()->route('planos.show', $planoId)
+            ->with('success', 'Objetivo estratégico atualizado com sucesso!');
     }
 
     public function destroy($id)
@@ -71,6 +82,7 @@ class ObjetivoEstrategicoController extends Controller
         $planoId = $objetivo->plano_estrategico_id;
         $objetivo->delete();
 
-        return redirect()->route('planos.show', $planoId)->with('success', 'Objetivo estratégico excluído com sucesso!');
+        return redirect()->route('planos.show', $planoId)
+            ->with('success', 'Objetivo estratégico excluído com sucesso!');
     }
 }

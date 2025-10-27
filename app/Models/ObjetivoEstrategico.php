@@ -13,10 +13,7 @@ class ObjetivoEstrategico extends Model
     
     protected $fillable = [
         'plano_estrategico_id',
-        'titulo',
         'descricao',
-        'prazo',
-        'indicador_sucesso',
         'especifico',
         'mensuravel',
         'atingivel',
