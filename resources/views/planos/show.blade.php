@@ -131,4 +131,62 @@
         </div>
     </div>
 </div>
+
+{{-- Seção: Pilares Estratégicos --}}
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Pilares Estratégicos</h5>
+        <a href="{{ route('pilares.create', $plano->id) }}" class="btn btn-light btn-sm">
+            <i class="bi bi-plus-circle"></i> Novo Pilar
+        </a>
+    </div>
+
+    <div class="card-body">
+        @if($plano->pilares->isEmpty())
+            <div class="text-center py-4 text-muted">
+                <i class="bi bi-diagram-3 display-6 d-block mb-2"></i>
+                Nenhum pilar estratégico cadastrado ainda.
+            </div>
+        @else
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nome</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($plano->pilares as $pilar)
+                        <tr>
+                            <td>
+                                <a href="{{ route('pilares.show', $pilar->id) }}" class="text-decoration-none text-dark">
+                                    {{ $pilar->nome }}
+                                </a>
+                            </td>
+                            <td class="text-end">
+                                <a href="{{ route('pilares.edit', $pilar->id) }}" 
+                                   class="btn btn-outline-warning btn-sm" 
+                                   title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form action="{{ route('pilares.destroy', $pilar->id) }}" 
+                                      method="POST" 
+                                      class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                            class="btn btn-outline-danger btn-sm" 
+                                            onclick="return confirm('Deseja excluir este pilar estratégico?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+    </div>
+</div>
+
 @endsection
