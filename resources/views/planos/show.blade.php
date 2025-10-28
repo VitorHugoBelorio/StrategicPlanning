@@ -4,7 +4,8 @@
 
 @section('content')
 <div class="container py-5">
-    {{-- Seção do Plano Estratégico --}}
+
+    {{-- Seção: Plano Estratégico --}}
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-header bg-info text-white">
             <h5 class="mb-0">{{ $plano->titulo }}</h5>
@@ -25,8 +26,8 @@
         </div>
     </div>
 
-    {{-- Seção do Diagnóstico Estratégico --}}
-    <div class="card shadow-sm border-0">
+    {{-- Seção: Diagnóstico Estratégico --}}
+    <div class="card shadow-sm border-0 mb-4">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Diagnóstico Estratégico</h5>
 
@@ -73,11 +74,10 @@
         </div>
     </div>
 
-    {{--Seção do Objetivos Estratégicos --}}
+    {{-- Seção: Objetivos Estratégicos --}}
     <div class="card shadow-sm border-0">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Objetivos Estratégicos</h5>
-
             <a href="{{ route('objetivos.create', $plano->id) }}" class="btn btn-light btn-sm">
                 <i class="bi bi-plus-circle"></i> Novo Objetivo
             </a>
@@ -104,23 +104,27 @@
                     </thead>
                     <tbody>
                         @foreach($plano->objetivos as $objetivo)
-    <tr>
-        <td>{{ $objetivo->descricao }}</td>
-        <td>{{ $objetivo->especifico ?? '—' }}</td>
-        <td>{{ $objetivo->mensuravel ?? '—' }}</td>
-        <td>{{ $objetivo->atingivel ?? '—' }}</td>
-        <td>{{ $objetivo->relevante ?? '—' }}</td>
-        <td>{{ $objetivo->tempo_definido ?? '—' }}</td>
-        <td class="text-end">
-            <a href="{{ route('objetivos.edit', $objetivo->id) }}" class="btn btn-sm btn-outline-warning">✎</a>
-            <form action="{{ route('objetivos.destroy', $objetivo->id) }}" method="POST" class="d-inline">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Excluir?')">🗑</button>
-            </form>
-        </td>
-    </tr>
-@endforeach
+                            <tr>
+                                <td>{{ $objetivo->descricao }}</td>
+                                <td>{{ $objetivo->especifico ?? '—' }}</td>
+                                <td>{{ $objetivo->mensuravel ?? '—' }}</td>
+                                <td>{{ $objetivo->atingivel ?? '—' }}</td>
+                                <td>{{ $objetivo->relevante ?? '—' }}</td>
+                                <td>{{ $objetivo->tempo_definido ?? '—' }}</td>
+                                <td class="text-end">
+                                    <a href="{{ route('objetivos.edit', $objetivo->id) }}" class="btn btn-outline-warning btn-sm" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form action="{{ route('objetivos.destroy', $objetivo->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Deseja excluir este objetivo?')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             @endif
