@@ -9,9 +9,20 @@ return new class extends Migration {
     {
         Schema::create('cronogramas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('planos_estrategico_id')->constrained('planos_estrategicos')->onDelete('cascade');
-            $table->integer('mes');
-            $table->text('descricao');
+            // Corrigido para o nome esperado pelo seeder
+            $table->foreignId('plano_estrategico_id')->constrained('planos_estrategicos')->onDelete('cascade');
+
+            // Campos originais mantidos, agora opcionais
+            $table->integer('mes')->nullable();
+            $table->text('descricao')->nullable();
+
+            // Campos esperados pelo seeder
+            $table->text('atividade')->nullable();
+            $table->string('responsavel')->nullable();
+            $table->date('data_inicio')->nullable();
+            $table->date('data_fim')->nullable();
+            $table->string('status')->nullable();
+
             $table->timestamps();
         });
     }

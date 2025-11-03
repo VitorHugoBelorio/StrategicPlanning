@@ -10,13 +10,21 @@ return new class extends Migration {
         Schema::create('acoes_estrategicas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pilar_estrategico_id')->constrained('pilares_estrategicos')->onDelete('cascade');
-            $table->string('what');
-            $table->string('why');
+
+            // Campos já existentes (mantidos para compatibilidade)
+            $table->string('what')->nullable();
+            $table->string('why')->nullable();
             $table->string('who')->nullable();
             $table->string('when')->nullable();
             $table->string('where')->nullable();
             $table->text('how')->nullable();
             $table->string('how_much')->nullable();
+
+            // Novos campos esperados pelo seeder
+            $table->text('descricao')->nullable();
+            $table->string('responsavel')->nullable();
+            $table->date('prazo')->nullable();
+
             $table->timestamps();
         });
     }

@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/planos/{planoId}/pilares', [PilarEstrategicoController::class, 'index'])->name('pilares.index');
     Route::get('/planos/{planoId}/pilares/create', [PilarEstrategicoController::class, 'create'])->name('pilares.create');
     Route::post('/planos/{planoId}/pilares', [PilarEstrategicoController::class, 'store'])->name('pilares.store');
+    Route::get('/pilares/{id}', [PilarEstrategicoController::class, 'show'])->name('pilares.show');
     Route::get('/pilares/{id}/edit', [PilarEstrategicoController::class, 'edit'])->name('pilares.edit');
     Route::put('/pilares/{id}', [PilarEstrategicoController::class, 'update'])->name('pilares.update');
     Route::delete('/pilares/{id}', [PilarEstrategicoController::class, 'destroy'])->name('pilares.destroy');

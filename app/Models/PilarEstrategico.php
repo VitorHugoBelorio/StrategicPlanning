@@ -9,6 +9,8 @@ class PilarEstrategico extends Model
 {
     use HasFactory;
 
+    protected $table = 'pilares_estrategicos'; // 🔹 Corrige o nome da tabela
+
     protected $fillable = [
         'plano_estrategico_id',
         'nome',
