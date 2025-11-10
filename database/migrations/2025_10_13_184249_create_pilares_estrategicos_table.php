@@ -13,6 +13,11 @@ return new class extends Migration {
                   ->constrained('planos_estrategicos')
                   ->onDelete('cascade');
             $table->string('nome');
+            $table->text('objetivo');
+            $table->text('meta');
+            $table->string('indicador');
+            $table->datetime('data_inicio');
+            $table->datetime('data_fim');
             $table->timestamps();
         });
     }

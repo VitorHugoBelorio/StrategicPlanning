@@ -5,7 +5,7 @@
 @section('content')
 <div class="container py-5">
     <div class="card shadow-sm border-0">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Novo Pilar Estratégico - {{ $plano->titulo }}</h5>
             <a href="{{ route('planos.show', $plano->id) }}" class="btn btn-light btn-sm">
                 <i class="bi bi-arrow-left"></i> Voltar
@@ -35,9 +35,87 @@
                     @enderror
                 </div>
 
+                <div class="mb-3">
+                    <label for="objetivo" class="form-label fw-semibold">Objetivo</label>
+                    <textarea 
+                        name="objetivo" 
+                        id="objetivo" 
+                        class="form-control @error('objetivo') is-invalid @enderror"
+                        rows="3"
+                        placeholder="Descreva o objetivo deste pilar"
+                        required
+                    >{{ old('objetivo') }}</textarea>
+                    @error('objetivo')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="meta" class="form-label fw-semibold">Meta</label>
+                    <textarea 
+                        name="meta" 
+                        id="meta" 
+                        class="form-control @error('meta') is-invalid @enderror"
+                        rows="2"
+                        placeholder="Defina a meta a ser alcançada"
+                        required
+                    >{{ old('meta') }}</textarea>
+                    @error('meta')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="indicador" class="form-label fw-semibold">Indicador</label>
+                    <input 
+                        type="text" 
+                        name="indicador" 
+                        id="indicador" 
+                        class="form-control @error('indicador') is-invalid @enderror"
+                        placeholder="Ex: Percentual de conclusão"
+                        value="{{ old('indicador') }}"
+                        required
+                    >
+                    @error('indicador')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="data_inicio" class="form-label fw-semibold">Data de Início</label>
+                        <input 
+                            type="date" 
+                            name="data_inicio" 
+                            id="data_inicio" 
+                            class="form-control @error('data_inicio') is-invalid @enderror"
+                            value="{{ old('data_inicio') }}"
+                            required
+                        >
+                        @error('data_inicio')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="data_fim" class="form-label fw-semibold">Data de Término</label>
+                        <input 
+                            type="date" 
+                            name="data_fim" 
+                            id="data_fim" 
+                            class="form-control @error('data_fim') is-invalid @enderror"
+                            value="{{ old('data_fim') }}"
+                            required
+                        >
+                        @error('data_fim')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="d-flex justify-content-end">
                     <a href="{{ route('planos.show', $plano->id) }}" class="btn btn-outline-secondary me-2">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-success">
                         <i class="bi bi-save"></i> Salvar Pilar
                     </button>
                 </div>

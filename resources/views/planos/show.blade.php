@@ -145,46 +145,74 @@
         @if($plano->pilares->isEmpty())
             <div class="text-center py-4 text-muted">
                 <i class="bi bi-diagram-3 display-6 d-block mb-2"></i>
-                Nenhum pilar estratégico cadastrado ainda.
+                Nenhum pilar estratégico definido ainda.
             </div>
         @else
-            <table class="table table-hover align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Nome</th>
-                        <th class="text-end">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($plano->pilares as $pilar)
-                        <tr>
-                            <td>
-                                <a href="{{ route('pilares.show', $pilar->id) }}" class="text-decoration-none text-dark">
-                                    {{ $pilar->nome }}
-                                </a>
-                            </td>
-                            <td class="text-end">
-                                <a href="{{ route('pilares.edit', $pilar->id) }}" 
-                                   class="btn btn-outline-warning btn-sm" 
-                                   title="Editar">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <form action="{{ route('pilares.destroy', $pilar->id) }}" 
-                                      method="POST" 
-                                      class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" 
-                                            class="btn btn-outline-danger btn-sm" 
-                                            onclick="return confirm('Deseja excluir este pilar estratégico?')">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            {{-- centraliza quando poucos pilares --}}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 {{ $plano->pilares->count() < 3 ? 'justify-content-center' : '' }}">
+                @foreach($plano->pilares as $pilar)
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title text-success">{{ $pilar->nome }}</h5>
+                                    <span class="badge bg-{{ $pilar->progresso >= 100 ? 'success' : 'primary' }}">
+                                        {{ number_format($pilar->progresso, 0) }}%
+                                    </span>
+                                </div>
+                                
+                                <p class="card-text small text-muted mb-3">{{ Str::limit($pilar->objetivo, 100) }}</p>
+                                
+                                <div class="progress mb-3" style="height: 8px;">
+                                    <div class="progress-bar bg-success" 
+                                         role="progressbar" 
+                                         style="width: {{ $pilar->progresso }}%" 
+                                         aria-valuenow="{{ $pilar->progresso }}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="100">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center small text-muted mb-3">
+                                    <span>
+                                        <i class="bi bi-check-circle"></i>
+                                        {{ $pilar->tasks->where('status', 'concluida')->count() }}/{{ $pilar->tasks->count() }} tasks
+                                    </span>
+                                    <span>
+                                        <i class="bi bi-calendar"></i>
+                                        {{ $pilar->data_fim->format('d/m/Y') }}
+                                    </span>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ route('pilares.show', $pilar->id) }}" 
+                                       class="btn btn-outline-success btn-sm">
+                                        <i class="bi bi-kanban"></i> Ver Pilar
+                                    </a>
+                                    <div>
+                                        <a href="{{ route('pilares.edit', $pilar->id) }}" 
+                                           class="btn btn-outline-warning btn-sm" 
+                                           title="Editar">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <form action="{{ route('pilares.destroy', $pilar->id) }}" 
+                                              method="POST" 
+                                              class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" 
+                                                    class="btn btn-outline-danger btn-sm" 
+                                                    onclick="return confirm('Deseja excluir este pilar estratégico?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         @endif
     </div>
 </div>
