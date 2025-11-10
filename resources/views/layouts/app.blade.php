@@ -17,7 +17,7 @@
     @unless (Route::is('login') || Route::is('register') || Route::is('password.request') || Route::is('password.reset'))
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
             <div class="container">
-                <a class="navbar-brand fw-semibold" href="{{ url('/') }}">
+                <a class="navbar-brand fw-semibold" href="{{ url('/dashboard') }}">
                     <i class="bi bi-bar-chart-fill me-1"></i> Planejamento Estratégico
                 </a>
 
@@ -59,5 +59,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ...outros scripts... -->
+    @stack('scripts')
 </body>
 </html>

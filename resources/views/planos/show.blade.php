@@ -75,7 +75,7 @@
     </div>
 
     {{-- Seção: Objetivos Estratégicos --}}
-    <div class="card shadow-sm border-0">
+    <div class="card shadow-sm border-0 mb-4">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Objetivos Estratégicos</h5>
             <a href="{{ route('objetivos.create', $plano->id) }}" class="btn btn-light btn-sm">
@@ -130,91 +130,200 @@
             @endif
         </div>
     </div>
-</div>
 
-{{-- Seção: Pilares Estratégicos --}}
-<div class="card shadow-sm border-0 mt-4">
-    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Pilares Estratégicos</h5>
-        <a href="{{ route('pilares.create', $plano->id) }}" class="btn btn-light btn-sm">
-            <i class="bi bi-plus-circle"></i> Novo Pilar
-        </a>
+    {{-- Seção: Pilares Estratégicos --}}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Pilares Estratégicos</h5>
+            <a href="{{ route('pilares.create', $plano->id) }}" class="btn btn-light btn-sm">
+                <i class="bi bi-plus-circle"></i> Novo Pilar
+            </a>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table mb-0 align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Pilar</th>
+                            <th class="text-center">Progresso</th>
+                            <th class="text-center">Tasks</th>
+                            <th class="text-center">Peso (total/concl.)</th>
+                            <th class="text-center">Período</th>
+                            <th class="text-end">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($plano->pilares as $pilar)
+                            <tr>
+                                <td>
+                                    <strong>{{ $pilar->nome }}</strong><br>
+                                    <small class="text-muted">{{ Str::limit($pilar->objetivo, 100) }}</small>
+                                </td>
+
+                                <td class="text-center" style="min-width:180px;">
+                                    <div class="mb-1">
+                                        <span class="badge bg-{{ $pilar->progresso >= 100 ? 'success' : 'primary' }}">
+                                            {{ number_format($pilar->progresso, 0) }}%
+                                        </span>
+                                    </div>
+                                    <div class="progress" style="height:8px;">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                             style="width: {{ $pilar->progresso }}%;" aria-valuenow="{{ $pilar->progresso }}"
+                                             aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </td>
+
+                                <td class="text-center">
+                                    {{ $pilar->tasks->where('status', 'concluida')->count() }}/{{ $pilar->tasks->count() }}
+                                </td>
+
+                                <td class="text-center">
+                                    {{ $pilar->tasks->sum('peso') ?? 0 }}/{{ $pilar->tasks->where('status', 'concluida')->sum('peso') ?? 0 }}
+                                </td>
+
+                                <td class="text-center">
+                                    {{ optional($pilar->data_inicio)->format('Y-m-d') ?? '-' }} — {{ optional($pilar->data_fim)->format('Y-m-d') ?? '-' }}
+                                </td>
+
+                                <td class="text-end">
+                                    <a href="{{ route('pilares.show', $pilar->id) }}" class="btn btn-sm btn-outline-success">
+                                        <i class="bi bi-kanban"></i> Ver
+                                    </a>
+                                    <a href="{{ route('pilares.edit', $pilar->id) }}" class="btn btn-sm btn-outline-warning ms-1">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form action="{{ route('pilares.destroy', $pilar->id) }}" method="POST" class="d-inline ms-1">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Deseja excluir este pilar estratégico?')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">Nenhum pilar estratégico definido ainda.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <div class="card-body">
-        @if($plano->pilares->isEmpty())
-            <div class="text-center py-4 text-muted">
-                <i class="bi bi-diagram-3 display-6 d-block mb-2"></i>
-                Nenhum pilar estratégico definido ainda.
-            </div>
-        @else
-            {{-- centraliza quando poucos pilares --}}
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 {{ $plano->pilares->count() < 3 ? 'justify-content-center' : '' }}">
-                @foreach($plano->pilares as $pilar)
-                    <div class="col">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h5 class="card-title text-success">{{ $pilar->nome }}</h5>
-                                    <span class="badge bg-{{ $pilar->progresso >= 100 ? 'success' : 'primary' }}">
-                                        {{ number_format($pilar->progresso, 0) }}%
-                                    </span>
-                                </div>
-                                
-                                <p class="card-text small text-muted mb-3">{{ Str::limit($pilar->objetivo, 100) }}</p>
-                                
-                                <div class="progress mb-3" style="height: 8px;">
-                                    <div class="progress-bar bg-success" 
-                                         role="progressbar" 
-                                         style="width: {{ $pilar->progresso }}%" 
-                                         aria-valuenow="{{ $pilar->progresso }}" 
-                                         aria-valuemin="0" 
-                                         aria-valuemax="100">
-                                    </div>
-                                </div>
+    {{-- Seção: Indicador de Desempenho (compacto) --}}
+    <div class="card shadow-sm border-0 mt-4 indicator-compact">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Indicador de Desempenho</h5>
+            <a href="{{ route('indicadores.painel', $plano->id) }}" class="btn btn-light btn-sm">
+                <i class="bi bi-bar-chart"></i> Ver Detalhes
+            </a>
+        </div>
 
-                                <div class="d-flex justify-content-between align-items-center small text-muted mb-3">
-                                    <span>
-                                        <i class="bi bi-check-circle"></i>
-                                        {{ $pilar->tasks->where('status', 'concluida')->count() }}/{{ $pilar->tasks->count() }} tasks
-                                    </span>
-                                    <span>
-                                        <i class="bi bi-calendar"></i>
-                                        {{ $pilar->data_fim->format('d/m/Y') }}
-                                    </span>
-                                </div>
+        <div class="card-body py-3">
+            <div class="row g-2 align-items-center">
+                <div class="col-md-4">
+                    <h6 class="mb-1">Progresso Geral</h6>
+                    <div class="progress mb-2" style="height:10px;">
+                        <div id="progressoGeralBar" class="progress-bar bg-success" role="progressbar" style="width:0%">0%</div>
+                    </div>
+                    <p class="small text-muted mb-0">Peso concluído / peso total do plano</p>
 
-                                <div class="d-flex justify-content-between">
-                                    <a href="{{ route('pilares.show', $pilar->id) }}" 
-                                       class="btn btn-outline-success btn-sm">
-                                        <i class="bi bi-kanban"></i> Ver Pilar
-                                    </a>
-                                    <div>
-                                        <a href="{{ route('pilares.edit', $pilar->id) }}" 
-                                           class="btn btn-outline-warning btn-sm" 
-                                           title="Editar">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-                                        <form action="{{ route('pilares.destroy', $pilar->id) }}" 
-                                              method="POST" 
-                                              class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" 
-                                                    class="btn btn-outline-danger btn-sm" 
-                                                    onclick="return confirm('Deseja excluir este pilar estratégico?')">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                    <ul class="list-unstyled small text-muted mt-3 mb-0" id="pilaresLegenda">
+                        <!-- preenchido via JS -->
+                    </ul>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="d-flex gap-2">
+                        <div class="flex-fill">
+                            <canvas id="chartProgressoPilares" height="140"></canvas>
                         </div>
                     </div>
-                @endforeach
+                </div>
             </div>
-        @endif
+        </div>
     </div>
+
 </div>
+
+<style>
+/* compacta a seção de indicadores para não ocupar tanto espaço */
+.indicator-compact .card-body { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.indicator-compact #pilaresLegenda li { line-height: 1.1; }
+@media (max-width: 767px) {
+    .indicator-compact .card-body { padding: 0.5rem; }
+    .indicator-compact canvas { height: 120px !important; }
+}
+</style>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const url = "{{ route('indicadores.chart', $plano->id) }}";
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            const progresso = data.plano?.progresso_percent ?? 0;
+            const bar = document.getElementById('progressoGeralBar');
+            if (bar) {
+                bar.style.width = progresso + '%';
+                bar.textContent = progresso + '%';
+            }
+
+            const legenda = document.getElementById('pilaresLegenda');
+            if (legenda && Array.isArray(data.pilares)) {
+                legenda.innerHTML = data.pilares.map(p =>
+                    `<li class="mb-1"><strong>${p.nome}</strong> — ${p.progresso_percent}% <span class="text-muted">(${p.concluidas}/${p.total_tasks})</span></li>`
+                ).join('');
+            }
+
+            // Chart: progresso por pilar
+            const ctx1 = document.getElementById('chartProgressoPilares')?.getContext('2d');
+            if (ctx1) {
+                new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: data.charts?.labels || [],
+                        datasets: [{
+                            label: 'Progresso (%)',
+                            data: data.charts?.progresso_por_pilar || [],
+                            backgroundColor: 'rgba(25,135,84,0.85)'
+                        }]
+                    },
+                    options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
+                });
+            }
+
+            // Chart: tasks por período
+            const ctx2 = document.getElementById('chartTasksPeriodo')?.getContext('2d');
+            if (ctx2) {
+                new Chart(ctx2, {
+                    type: 'line',
+                    data: {
+                        labels: data.period_distribution?.labels || [],
+                        datasets: [{
+                            label: 'Tasks por mês',
+                            data: data.period_distribution?.counts || [],
+                            borderColor: 'rgba(13,110,253,0.9)',
+                            backgroundColor: 'rgba(13,110,253,0.15)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                });
+            }
+        })
+        .catch(err => {
+            console.error('Erro ao carregar dados de indicadores:', err);
+        });
+});
+</script>
+@endpush
 
 @endsection

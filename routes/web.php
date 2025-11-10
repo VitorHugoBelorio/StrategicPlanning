@@ -7,6 +7,7 @@ use App\Http\Controllers\DiagnosticoEstrategicoController;
 use App\Http\Controllers\ObjetivoEstrategicoController;
 use App\Http\Controllers\PilarEstrategicoController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\IndicadorDesempenhoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,4 +88,14 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/tasks/{id}', [TaskController::class, 'update'])->name('tasks.update');
     Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
     Route::patch('/tasks/{id}/status', [TaskController::class, 'updateStatus'])->name('tasks.update-status');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Indicadores / Painel de Desempenho
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/planos/{planoId}/indicadores/painel', [IndicadorDesempenhoController::class, 'painel'])
+        ->name('indicadores.painel');
+    Route::get('/planos/{planoId}/indicadores/chart', [IndicadorDesempenhoController::class, 'chartData'])
+        ->name('indicadores.chart');
 });

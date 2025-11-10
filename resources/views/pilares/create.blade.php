@@ -7,9 +7,6 @@
     <div class="card shadow-sm border-0">
         <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Novo Pilar Estratégico - {{ $plano->titulo }}</h5>
-            <a href="{{ route('planos.show', $plano->id) }}" class="btn btn-light btn-sm">
-                <i class="bi bi-arrow-left"></i> Voltar
-            </a>
         </div>
 
         <div class="card-body">
