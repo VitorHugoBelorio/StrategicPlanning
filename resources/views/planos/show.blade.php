@@ -19,6 +19,9 @@
                 <a href="{{ route('planos.edit', $plano->id) }}" class="btn btn-warning text-white me-2">
                     <i class="bi bi-pencil"></i> Editar Plano
                 </a>
+                <a href="{{ route('relatorios.plano.pdf', $plano->id) }}" class="btn btn-success text-white me-2">
+                    <i class="bi bi-file-earmark-pdf"></i> Baixar Relatório
+                </a>
                 <a href="{{ route('planos.index') }}" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left"></i> Voltar
                 </a>

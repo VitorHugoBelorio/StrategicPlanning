@@ -9,6 +9,7 @@ use App\Http\Controllers\PilarEstrategicoController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\IndicadorDesempenhoController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\RelatorioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,4 +110,11 @@ Route::middleware(['auth'])->group(function () {
         ->name('indicadores.painel');
     Route::get('/planos/{planoId}/indicadores/chart', [IndicadorDesempenhoController::class, 'chartData'])
         ->name('indicadores.chart');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relatórios Gerais
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/relatorios/plano/{id}', [RelatorioController::class, 'gerarPDF'])->name('relatorios.plano.pdf');
 });
