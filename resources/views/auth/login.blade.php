@@ -29,6 +29,10 @@
                     <label for="password">Senha</label>
                 </div>
 
+                <div class="mb-3 text-center">
+                    <a href="{{ route('password.request') }}" class="small text-muted">Esqueceu a senha?</a>
+                </div>
+                
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary py-2 fw-semibold">Entrar</button>
                 </div>

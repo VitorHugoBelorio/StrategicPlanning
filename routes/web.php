@@ -8,6 +8,7 @@ use App\Http\Controllers\ObjetivoEstrategicoController;
 use App\Http\Controllers\PilarEstrategicoController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\IndicadorDesempenhoController;
+use App\Http\Controllers\Auth\PasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,16 @@ Route::post('/login', [AuthController::class, 'loginAttempt'])->name('login.atte
 
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+/*
+|--------------------------------------------------------------------------
+| Password reset (recuperar senha)
+|--------------------------------------------------------------------------
+*/
+Route::get('/password/reset', [PasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/password/email', [PasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('/password/reset/{token}', [PasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/reset', [PasswordController::class, 'reset'])->name('password.update');
 
 /*
 |--------------------------------------------------------------------------
