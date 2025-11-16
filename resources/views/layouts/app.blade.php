@@ -53,7 +53,7 @@
         </nav>
     @endunless
 
-    <main class="@unless (Route::is('login') || Route::is('register')) mt-4 @endunless">
+    <main class="@unless (Route::is('login') || Route::is('register') || Route::is('password.request') || Route::is('password.reset')) mt-4 @endunless">
         @yield('content')
     </main>
 
