@@ -10,6 +10,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\IndicadorDesempenhoController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,10 @@ Route::post('/login', [AuthController::class, 'loginAttempt'])->name('login.atte
 
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Registro
+Route::get('/register', [RegisterController::class, 'create'])->name('register');
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 /*
 |--------------------------------------------------------------------------

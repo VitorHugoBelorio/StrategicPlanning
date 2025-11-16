@@ -36,6 +36,10 @@
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary py-2 fw-semibold">Entrar</button>
                 </div>
+
+                <div class="text-center mt-3">
+                    <p>Ainda não tem uma conta?<a href="{{ route('register') }}"> Criar conta</a></p>
+                </div>
             </form>
 
             <div class="text-center mt-4">

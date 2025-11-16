@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('planos.index') }}" class="btn btn-outline-secondary me-2">Cancelar</a>
+                    <a href="{{ route('planos.show', $plano->id) }}" class="btn btn-outline-secondary me-2">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Salvar Diagnóstico</button>
                 </div>
             </form>
